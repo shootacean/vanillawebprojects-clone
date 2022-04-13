@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Validator | Vanilla Web Projects "CLONE"</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+      li {
+        list-style: none;
+      }
+      .container {
+        /* height: 100%; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form id="signup-form" method="post">
+        <ul>
+          <li>
+            <label for="username">User Name:</label>
+            <input
+              id="username"
+              type="username"
+              placeholder="Enter username"
+              autocomplete="username"
+              required
+              minlength="3"
+              maxlength="15"
+            />
+          </li>
+          <li>
+            <label for="email">Email:</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter email"
+              autocomplete="email"
+              required
+            />
+          </li>
+          <li>
+            <label for="password">Password:</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter password"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              maxlength="32"
+            />
+          </li>
+          <li>
+            <label for="confirm-password">Confirm Password:</label>
+            <input
+              id="confirm-password"
+              type="password"
+              placeholder="Enter password again"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              maxlength="32"
+            />
+          </li>
+          <li><button type="submit">Submit</button></li>
+          <li><button type="reset">Reset</button></li>
+        </ul>
+      </form>
+    </div>
+    <script>
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirm-password');
+      const signupForm = document.getElementById('signup-form');
+      const handleCheckPassword = (e) => {
+        if (password.value === confirmPassword.value) {
+          return true;
+        }
+        alert('Password does not match');
+        return false;
+      };
+      signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (handleCheckPassword()) {
+          document.getElementById('signup-form').submit();
+        }
+      });
+    </script>
+  </body>
+</html>
