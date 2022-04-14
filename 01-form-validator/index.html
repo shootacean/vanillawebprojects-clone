@@ -20,6 +20,10 @@
         align-items: center;
         justify-content: center;
       }
+      .error {
+        color: red;
+        font-weight: bold;
+      }
     </style>
   </head>
   <body>
@@ -37,6 +41,7 @@
               minlength="3"
               maxlength="15"
             />
+            <output id="error-username"></output>
           </li>
           <li>
             <label for="email">Email:</label>
@@ -78,9 +83,37 @@
       </form>
     </div>
     <script>
+      const signupForm = document.getElementById('signup-form');
+      const username = document.getElementById('username');
+      const email = document.getElementById('email');
       const password = document.getElementById('password');
       const confirmPassword = document.getElementById('confirm-password');
-      const signupForm = document.getElementById('signup-form');
+      // エラーメッセージ
+      const errorUsername = document.getElementById('error-username');
+
+      // ユーザー名
+      username.addEventListener('input', (e) => {
+        console.debug('input username.')
+        // username.setCustomValidity('');
+        errorUsername.textContent = '';
+        errorUsername.className = 'error';
+        username.checkValidity();
+      });
+      username.addEventListener('invalid', (e) => {
+        console.debug('invalid username.')
+        if (username.value === '') {
+          // username.setCustomValidity('ユーザー名を入力してください');
+          errorUsername.textContent = 'ユーザー名を入力してください';
+        } else if (username.validity.tooShort || username.validity.tooLonger) {
+          const min = username.minLength;
+          const max = username.maxLength;
+          // username.setCustomValidity(`ユーザー名は${min}文字以上${max}文字以下で入力してください`);
+          errorUsername.textContent = `ユーザー名は${min}文字以上${max}文字以下で入力してください`;
+        }
+        error.className = "error active";
+      });
+
+      // パスワード
       const handleCheckPassword = (e) => {
         if (password.value === confirmPassword.value) {
           return true;
@@ -88,10 +121,16 @@
         alert('Password does not match');
         return false;
       };
+
+      // フォーム送信時
       signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (handleCheckPassword()) {
-          document.getElementById('signup-form').submit();
+        const f = document.getElementById('signup-form');
+
+        // TODO すべての入力項目のバリデーションを一括で実行する
+        // if (handleCheckPassword()) {
+        if (f.reportValidity()) {
+          f.submit();
         }
       });
     </script>
